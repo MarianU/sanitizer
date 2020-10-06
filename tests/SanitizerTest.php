@@ -5,6 +5,20 @@ use Alfheim\Sanitizer\Sanitizer;
 class SanitizerTest extends PHPUnit_Framework_TestCase
 {
     /** @test */
+    public function it_should_not_fail()
+    {
+        $original = ['str' => null, 'str2' => null];
+        $expected = ['str' => '', 'str2' => ''];
+
+        $factory = Sanitizer::make([
+            'str' => 'trim',
+            'str2' => 'trim:/',
+        ]);
+
+        $this->assertEquals($expected, $factory->sanitize($original));
+    }
+
+    /** @test */
     public function it_should_trim_the_string()
     {
         $original = ['str' => 'lorem ipsum '];

@@ -220,13 +220,13 @@ class Sanitizer
     protected function buildArguments($value, array $args = null)
     {
         if (! $args) {
-            return (array) $value;
+            return is_null($value) ? [$value] : (array) $value;
         }
 
         $valuePosition = array_search(static::PLACEHOLDER_VALUE, $args, true);
 
         if ($valuePosition === false) {
-            return array_merge((array) $value, $args);
+            return array_merge(is_null($value) ? [$value] : (array) $value, $args);
         } else {
             $args[$valuePosition] = $value;
         }
